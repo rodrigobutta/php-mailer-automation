@@ -1,0 +1,34 @@
+{
+    "subject": "Asunto del Mail Test 1",
+    "from":{
+        "email" : "from@test.com",
+        "name" : "From Name"
+    },
+    "reply":{
+        "email" : "info@test.com",
+        "name" : "Info"
+    },  
+    "cc":[
+        {
+            "email" : "cc@gmail.com",
+            "name" : "Algun CC"
+        }
+    ],
+    "bcc":[
+        {
+            "email" : "bcc@gmail.com",
+            "name" : "Algun BCC"
+        }
+    ],
+    "body":{
+        "html" : true,
+        "alt" : "Texto alternativo al mail por no soportar el formato",
+        "autoEmbedImages" : true
+    },
+    "smtp":{
+        "host" : "smtp.mailtrap.io",
+        "auth" : true,
+        "username" : "58a9187b5e005b",
+        "password" : "d2ca064aa5eb5f"
+    }
+}
