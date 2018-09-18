@@ -137,6 +137,22 @@ use PHPMailer\PHPMailer\Exception;
         $mail->ClearAddresses();
         $mail->AddAddress($recipent->email, $recipent->name);
 
+        
+        // adjuntos de la campaña (no poner debajo de magia de embeds porque me limpia imagenes)
+        $mail->clearAttachments();
+        if(isset($campaign->attachs)){
+            foreach ($campaign->attachs as $key => $value) {                
+                $mail->addAttachment($templatePath .'attachs/' . $value->file, $value->name); 
+            }
+        }
+
+        if(isset($recipent->attachs)){
+            foreach ($recipent->attachs as $key => $value) {                
+                $mail->addAttachment($templatePath .'attachs/' . $value->file, $value->name); 
+            }
+        }
+
+
         if(isset($settings->body->html) && $settings->body->html){
             $mail->IsHTML($settings->body->html);
             $mail->AltBody=dynRecipent($settings->body->alt, $recipent);
@@ -174,6 +190,10 @@ use PHPMailer\PHPMailer\Exception;
         $mail->Body = $html;
 
 
+
+
+
+
         p('Enviando mail a  ' . $recipent->email);
 
         
@@ -199,14 +219,18 @@ use PHPMailer\PHPMailer\Exception;
 
 function dynCampaign($str, $campaign){
     foreach ($campaign as $key => $value) {
-        $str = str_replace('%%CAMPAIGN_' . strtoupper($key) . '%%', $value, $str);    
+        if(!is_array($value)){
+            $str = str_replace('%%CAMPAIGN_' . strtoupper($key) . '%%', $value, $str);    
+        }
     }
     return $str;
 }
 
 function dynRecipent($str, $recipent){
     foreach ($recipent as $key => $value) {
-        $str = str_replace('%%USER_' . strtoupper($key) . '%%', $value, $str);    
+        if(!is_array($value)){
+            $str = str_replace('%%USER_' . strtoupper($key) . '%%', $value, $str);    
+        }
     }
     return $str;
 }

@@ -1,7 +1,13 @@
 [
     {
         "email" : "rbutta@gmail.com",
-        "name" : "Rodrigo Butta"
+        "name" : "Rodrigo Butta",
+        "attachs":[
+            {
+                "file": "factura-rodri.png",
+                "name": "Factura de Rodri Butta"
+            }
+        ]
     },
     {
         "email" : "rbutta03@hotmail.com",

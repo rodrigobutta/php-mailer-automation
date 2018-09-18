@@ -1,4 +1,10 @@
 {
     "name": "Campaña Test 1" ,
-    "subject": "Asunto de Test 1 con nombre de usuario a %%USER_NAME%%"   
+    "subject": "Asunto de Test 1 con nombre de usuario a %%USER_NAME%%",
+    "attachs":[
+        {
+            "file": "consejo-doc.pdf",
+            "name": "Pdf Consejo de Campana"
+        }
+    ]
 }
