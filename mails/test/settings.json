@@ -1,5 +1,4 @@
-{
-    "subject": "Asunto del Mail Test 1",
+{    
     "from":{
         "email" : "from@test.com",
         "name" : "From Name"

@@ -1,3 +1,4 @@
 {
-    "name": "Campaña Test 1"    
+    "name": "Campaña Test 1" ,
+    "subject": "Asunto de Test 1 con nombre de usuario a %%USER_NAME%%"   
 }

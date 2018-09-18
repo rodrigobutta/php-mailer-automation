@@ -42,7 +42,13 @@ use PHPMailer\PHPMailer\Exception;
     }
     
     $htmlRaw = file_get_contents($templatePath . 'index.html');
+
+    // $htmlRaw = htmlspecialchars($htmlRaw);
     // $html .= "<h1>Test</h1><p>Esta es una imagen: <img src=\"cid:testimgid\" /></p>";
+
+
+    sleep(1);
+   
 
 
 
@@ -91,6 +97,8 @@ use PHPMailer\PHPMailer\Exception;
 
     $mail = new PHPMailer();
 
+    $mail->CharSet = 'UTF-8';
+
     if(isset($settings->smtp)){
         $mail->IsSMTP();
         $mail->Host = $settings->smtp->host;
@@ -134,7 +142,9 @@ use PHPMailer\PHPMailer\Exception;
             $mail->AltBody=dynRecipent($settings->body->alt, $recipent);
         }
 
-        $mail->Subject = dynRecipent($settings->subject, $recipent);
+        $subject = dynRecipent($campaign->subject, $recipent);
+        $subject = dynCampaign($subject, $campaign);
+        $mail->Subject = $subject;
 
         // MAGIA 1 buscar imagenes linkeadas en el HTML y embeberlas al mail, reemplazando tambien la imagen en el mismo HTML.
         $html = $htmlRaw;
@@ -160,19 +170,21 @@ use PHPMailer\PHPMailer\Exception;
 
         $html = dynRecipent($html, $recipent);
         $html = dynCampaign($html, $campaign);
-
+        // $html = fixMySpanish($html); // los que venian mal los arregla, pero los que venian bien los rompe. Mejor usar el CharSet del phpmailer        
         $mail->Body = $html;
 
 
         p('Enviando mail a  ' . $recipent->email);
 
+        
         if(!$mail->Send()){
-        p("Error al enviar: " . $mail->ErrorInfo,true);
+            p("Error al enviar: " . $mail->ErrorInfo,true);
         }
         else{
-        p("Mail enviado!");
+            p("Mail enviado!");
         }
-
+        
+        sleep(0.5);
 
     }
 
@@ -186,23 +198,17 @@ use PHPMailer\PHPMailer\Exception;
 
 
 function dynCampaign($str, $campaign){
-
     foreach ($campaign as $key => $value) {
         $str = str_replace('%%CAMPAIGN_' . strtoupper($key) . '%%', $value, $str);    
     }
-
     return $str;
-
 }
 
 function dynRecipent($str, $recipent){
-
     foreach ($recipent as $key => $value) {
         $str = str_replace('%%USER_' . strtoupper($key) . '%%', $value, $str);    
     }
-
     return $str;
-
 }
 
 function generateRandomString($length = 10) {
@@ -215,19 +221,16 @@ function generateRandomString($length = 10) {
     return $randomString;
 }
 
-function startsWith($haystack, $needle)
-{
+function startsWith($haystack, $needle){
      $length = strlen($needle);
      return (substr($haystack, 0, $length) === $needle);
 }
 
-function endsWith($haystack, $needle)
-{
+function endsWith($haystack, $needle){
     $length = strlen($needle);
     if ($length == 0) {
         return true;
     }
-
     return (substr($haystack, -$length) === $needle);
 }
 
@@ -243,7 +246,17 @@ function p($str = '', $isError = false){
 
     echo '<br>';
 
+    ob_flush();
+	flush();
+
 }
 
+function fixMySpanish($str) { 
+    return str_replace(     
+        array("á","é","í","ó","ú","ñ","Á","É","Í","Ó","Ú","Ñ","©","®","&","¿"),
+        array("&aacute;","&eacute;","&iacute;","&oacute;","&uacute;","&ntilde;","&Aacute;","&Eacute;","&Iacute;","&Oacute;","&Uacute;","&Ntilde;","&copy;","&reg;","&amp;","&iquest;"), 
+        $str
+    );     
+}
 
 ?>
