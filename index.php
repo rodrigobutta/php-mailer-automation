@@ -105,6 +105,8 @@ use PHPMailer\PHPMailer\Exception;
         $mail->SMTPAuth = $settings->smtp->auth;
         $mail->Username = $settings->smtp->username;
         $mail->Password = $settings->smtp->password;
+        $mail->Port = $settings->smtp->port;
+        $mail->SMTPSecure = $settings->smtp->security;
     }
 
     $mail->From = $settings->from->email;
