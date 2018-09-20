@@ -27,8 +27,8 @@
     "smtp":{
         "host" : "smtp.mailtrap.io",
         "auth" : true,
-        "port" : 587,
-        "security" : "tls",
+        "port" : 2525,
+        "security" : "",
         "username" : "58a9187b5e005b",
         "password" : "d2ca064aa5eb5f"
     }
