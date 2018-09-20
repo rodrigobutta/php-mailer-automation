@@ -157,12 +157,14 @@ use PHPMailer\PHPMailer\Exception;
 
         if(isset($settings->body->html) && $settings->body->html){
             $mail->IsHTML($settings->body->html);
-            $mail->AltBody=dynRecipent($settings->body->alt, $recipent);
+            
         }
 
         $subject = dynRecipent($campaign->subject, $recipent);
         $subject = dynCampaign($subject, $campaign);
         $mail->Subject = $subject;
+
+        $mail->AltBody=dynRecipent($campaign->preview, $recipent);
 
         // MAGIA 1 buscar imagenes linkeadas en el HTML y embeberlas al mail, reemplazando tambien la imagen en el mismo HTML.
         $html = $htmlRaw;

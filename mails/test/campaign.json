@@ -1,6 +1,7 @@
 {
     "name": "Test Campaign 1" ,
     "subject": "Test mail for %%USER_NAME%%",
+    "preview" : "Preview text",
     "attachs":[
         {
             "file": "attach.png",

@@ -21,7 +21,6 @@
     ],
     "body":{
         "html" : true,
-        "alt" : "Texto alternativo al mail por no soportar el formato",
         "autoEmbedImages" : true
     },
     "smtp":{

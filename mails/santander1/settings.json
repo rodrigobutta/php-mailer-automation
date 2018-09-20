@@ -8,8 +8,7 @@
         "name" : "Info"
     },      
     "body":{
-        "html" : true,
-        "alt" : "Texto alternativo al mail por no soportar el formato",
+        "html" : true,        
         "autoEmbedImages" : true
     },
     "smtp":{

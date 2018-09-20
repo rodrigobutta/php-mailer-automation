@@ -1,4 +1,5 @@
 {
     "name": "Boletin Santander 1" ,
-    "subject": "Boletín Santander"    
+    "subject": "Boletín Santander",
+    "preview" : "Texto de preview del mail"
 }
