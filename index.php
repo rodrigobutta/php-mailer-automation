@@ -5,11 +5,8 @@ require __DIR__ . '/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 // Levantando Template del origen que sea
 
-    // $templateName = 'test.zip';
-    // $templateName = 'test';
     if(!isset($_REQUEST["template"])){
         p('Debe especificar el origen del mail ?template=',true);    
     }
@@ -42,14 +39,9 @@ use PHPMailer\PHPMailer\Exception;
     }
     
     $htmlRaw = file_get_contents($templatePath . 'index.html');
-
-    // $htmlRaw = htmlspecialchars($htmlRaw);
-    // $html .= "<h1>Test</h1><p>Esta es una imagen: <img src=\"cid:testimgid\" /></p>";
-
-
-    sleep(1);
+    
+    sleep(0.25);
    
-
 
 
 // ARCHIVO DE CONFIGURACION SETTINGS
@@ -62,8 +54,6 @@ use PHPMailer\PHPMailer\Exception;
         p('Usando archivo de configuración ' . $settingsFile);
     }
     $settings = json_decode(file_get_contents($settingsFile,true));
-    // var_dump($settings);
-
 
 
 // ARCHIVO DE CAMPAÑA
@@ -76,8 +66,6 @@ use PHPMailer\PHPMailer\Exception;
         p('Usando archivo de campaña ' . $campaignFile);
         $campaign = json_decode(file_get_contents($campaignFile,true));
     }
-    // var_dump($campaign);
-
 
 
 // ARCHIVO DE DESTINATARIOS
@@ -90,8 +78,7 @@ use PHPMailer\PHPMailer\Exception;
         p('Usando archivo de destinatarios ' . $recipentsFile);
     }
     $recipents = json_decode(file_get_contents($recipentsFile,true));
-    // var_dump($recipents);
-
+    
 
 // PREPARAMOS MAIL
 
@@ -112,7 +99,6 @@ use PHPMailer\PHPMailer\Exception;
     $mail->From = $settings->from->email;
     $mail->FromName = $settings->from->name;
     $mail->Sender = $settings->from->email;
-
 
     $mail->AddReplyTo($settings->reply->email, $settings->reply->name);
 
@@ -139,7 +125,6 @@ use PHPMailer\PHPMailer\Exception;
         $mail->ClearAddresses();
         $mail->AddAddress($recipent->email, $recipent->name);
 
-        
         // adjuntos de la campaña (no poner debajo de magia de embeds porque me limpia imagenes)
         $mail->clearAttachments();
         if(isset($campaign->attachs)){
@@ -154,23 +139,29 @@ use PHPMailer\PHPMailer\Exception;
             }
         }
 
-
         if(isset($settings->body->html) && $settings->body->html){
-            $mail->IsHTML($settings->body->html);
-            
+            $mail->IsHTML($settings->body->html);            
         }
 
-        $subject = dynRecipent($campaign->subject, $recipent);
-        $subject = dynCampaign($subject, $campaign);
-        $mail->Subject = $subject;
+        if(isset($campaign->subject)){
+            $subject = dynRecipent($campaign->subject, $recipent);
+            $subject = dynCampaign($subject, $campaign);
+            $mail->Subject = $subject;
+        }
+        else{
+            p("La campaña no tiene asunto",true);
+        }
 
-        $mail->AltBody=dynRecipent($campaign->preview, $recipent);
+        if(isset($campaign->preview)){
+            $mail->AltBody=dynRecipent($campaign->preview, $recipent);
+        }
+        
 
         // MAGIA 1 buscar imagenes linkeadas en el HTML y embeberlas al mail, reemplazando tambien la imagen en el mismo HTML.
         $html = $htmlRaw;
         if(isset($settings->body->autoEmbedImages) && $settings->body->autoEmbedImages){
             preg_match_all( '|<img.*?src=[\'"](.*?)[\'"].*?>|i', $html, $images ); 
-            // var_dump($images[1]);
+            
             foreach ($images[1] as $key => $value) {    
                 $imagePath = $templatePath . $value;
 
@@ -186,6 +177,7 @@ use PHPMailer\PHPMailer\Exception;
                 }
 
             }
+
         }    
 
         $html = dynRecipent($html, $recipent);
@@ -193,14 +185,7 @@ use PHPMailer\PHPMailer\Exception;
         // $html = fixMySpanish($html); // los que venian mal los arregla, pero los que venian bien los rompe. Mejor usar el CharSet del phpmailer        
         $mail->Body = $html;
 
-
-
-
-
-
-        p('Enviando mail a  ' . $recipent->email);
-
-        
+        p('Enviando mail a  ' . $recipent->email);        
         if(!$mail->Send()){
             p("Error al enviar: " . $mail->ErrorInfo,true);
         }
@@ -279,12 +264,12 @@ function p($str = '', $isError = false){
 
 }
 
-function fixMySpanish($str) { 
-    return str_replace(     
-        array("á","é","í","ó","ú","ñ","Á","É","Í","Ó","Ú","Ñ","©","®","&","¿"),
-        array("&aacute;","&eacute;","&iacute;","&oacute;","&uacute;","&ntilde;","&Aacute;","&Eacute;","&Iacute;","&Oacute;","&Uacute;","&Ntilde;","&copy;","&reg;","&amp;","&iquest;"), 
-        $str
-    );     
-}
+// function fixMySpanish($str) { 
+//     return str_replace(     
+//         array("á","é","í","ó","ú","ñ","Á","É","Í","Ó","Ú","Ñ","©","®","&","¿"),
+//         array("&aacute;","&eacute;","&iacute;","&oacute;","&uacute;","&ntilde;","&Aacute;","&Eacute;","&Iacute;","&Oacute;","&Uacute;","&Ntilde;","&copy;","&reg;","&amp;","&iquest;"), 
+//         $str
+//     );     
+// }
 
 ?>
