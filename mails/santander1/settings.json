@@ -1,11 +1,11 @@
 {    
     "from":{
-        "email" : "from@test.com",
-        "name" : "Santander"
+        "email" : "ARTE@exch.bancorio.com.ar",
+        "name" : "Gerencia de Tecnología"
     },
     "reply":{
-        "email" : "info@test.com",
-        "name" : "Info"
+        "email" : "ARTE@exch.bancorio.com.ar",
+        "name" : "Gerencia de Tecnología"
     },      
     "body":{
         "html" : true,        
