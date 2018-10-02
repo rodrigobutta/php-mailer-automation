@@ -1,0 +1,23 @@
+{    
+    "from":{
+        "email" : "info@iaja.com",
+        "name" : "iajá"
+    },
+    "reply":{
+        "email" : "info@iaja.com",
+        "name" : "iajá"
+    },      
+    "body":{
+        "html" : true,        
+        "autoEmbedImages" : true
+    },
+    "smtp":{
+        "host" : "smtp.gmail.com",
+        "auth" : true,
+        "port" : 587,
+        "security" : "tls",
+        "username" : "dash.egoagency@gmail.com",
+        "password" : "aguirre540"
+
+    }
+}
