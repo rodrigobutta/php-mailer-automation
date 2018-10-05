@@ -1,10 +1,14 @@
 [
     {
         "email" : "rodrigo.butta@egoargentina.com",
-        "name" : "Rodrigo Butta"      
+        "name" : "Rodri"      
     },
     {
         "email" : "tatiana.serdoch@egoargentina.com",
-        "name" : "Tatiana Serdoch"     
+        "name" : "Tati"     
+    },
+    {
+        "email" : "guadalupe.madrea@egoargentina.com",
+        "name" : "Guada"     
     }
 ]
