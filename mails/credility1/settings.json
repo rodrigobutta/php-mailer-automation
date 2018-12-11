@@ -1,0 +1,23 @@
+{    
+    "from":{
+        "email" : "noreply@camoca.com.ar",
+        "name" : "CAMOCA"
+    },
+    "reply":{
+        "email" : "noreply@camoca.com.ar",
+        "name" : "CAMOCA"
+    },      
+    "body":{
+        "html" : true,        
+        "autoEmbedImages" : true
+    },
+    "smtp":{
+        "host" : "smtp.gmail.com",
+        "auth" : true,
+        "port" : 587,
+        "security" : "tls",
+        "username" : "dash.egoagency@gmail.com",
+        "password" : "aguirre540"
+
+    }
+}
