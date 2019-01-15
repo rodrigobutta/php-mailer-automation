@@ -1,0 +1,23 @@
+{    
+    "from":{
+        "email" : "ARTE@exch.bancorio.com.ar",
+        "name" : "Gerencia de Tecnología"
+    },
+    "reply":{
+        "email" : "ARTE@exch.bancorio.com.ar",
+        "name" : "Gerencia de Tecnología"
+    },      
+    "body":{
+        "html" : true,        
+        "autoEmbedImages" : true
+    },
+    "smtp":{
+        "host" : "smtp.gmail.com",
+        "auth" : true,
+        "port" : 587,
+        "security" : "tls",
+        "username" : "dash.egoagency@gmail.com",
+        "password" : "aguirre540"
+
+    }
+}
